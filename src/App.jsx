@@ -408,35 +408,39 @@ export default function App() {
   );
 
   return (
-    <div style={{ minHeight: "100vh", width: "100%", boxSizing: "border-box", background: "#0a0a0f", fontFamily: "'Segoe UI', sans-serif", padding: "24px 16px", color: "#e2e8f0", margin: 0 }}>
-      <div style={{ maxWidth: 600, margin: "0 auto" }}>
-        <div style={{ textAlign: "center", marginBottom: 28 }}>
-          <div style={{ fontSize: 12, color: "#94a3b8", letterSpacing: 3, textTransform: "uppercase", marginBottom: 8 }}>Roadmap สู่ KMITL / KMUTNB</div>
-          <h1 style={{ fontSize: 24, fontWeight: 800, margin: 0, color: "#f1f5f9" }}>Full Stack + CTF + Portfolio 🎓</h1>
-          <div style={{ marginTop: 20, background: "#161622", borderRadius: 16, padding: "16px 20px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13 }}>
-              <span style={{ color: "#94a3b8" }}>ความคืบหน้าทั้งหมด</span>
-              <span style={{ color: "#f1f5f9", fontWeight: 700 }}>{totalDone}/{totalAll} หัวข้อ</span>
-            </div>
-            <div style={{ height: 8, background: "#1e293b", borderRadius: 99, overflow: "hidden" }}>
-              <div style={{ height: "100%", width: `${totalPct}%`, background: "linear-gradient(90deg, #3b82f6, #ec4899)", borderRadius: 99, transition: "width 0.4s ease" }} />
-            </div>
-            <div style={{ textAlign: "right", marginTop: 6, fontSize: 13, color: "#64748b" }}>{totalPct}% {syncing ? "☁️ กำลังบันทึก..." : loaded ? "✓ ซิงค์แล้ว" : "⏳ กำลังโหลด..."}</div>
-          </div>
-        </div>
+    <div style={{ minHeight: "100vh", width: "100%", background: "#0a0a0f", fontFamily: "'Segoe UI', sans-serif", color: "#e2e8f0" }}>
 
+      {/* Header */}
+      <div style={{ textAlign: "center", padding: "32px 24px 24px", borderBottom: "1px solid #1a1a2e", marginBottom: 32, background: "linear-gradient(180deg, #0d0d1a 0%, #0a0a0f 100%)" }}>
+        <div style={{ fontSize: 11, color: "#94a3b8", letterSpacing: 4, textTransform: "uppercase", marginBottom: 10 }}>Roadmap สู่ KMITL / KMUTNB</div>
+        <h1 style={{ fontSize: "clamp(20px, 3vw, 36px)", fontWeight: 800, margin: "0 0 24px", color: "#f1f5f9" }}>Full Stack + CTF + Portfolio 🎓</h1>
+        <div style={{ maxWidth: 640, margin: "0 auto", background: "#161622", borderRadius: 16, padding: "16px 24px", border: "1px solid #1e293b" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13 }}>
+            <span style={{ color: "#94a3b8" }}>ความคืบหน้าทั้งหมด</span>
+            <span style={{ color: "#f1f5f9", fontWeight: 700 }}>{totalDone}/{totalAll} หัวข้อ</span>
+          </div>
+          <div style={{ height: 8, background: "#1e293b", borderRadius: 99, overflow: "hidden" }}>
+            <div style={{ height: "100%", width: `${totalPct}%`, background: "linear-gradient(90deg, #3b82f6, #ec4899)", borderRadius: 99, transition: "width 0.4s ease" }} />
+          </div>
+          <div style={{ textAlign: "right", marginTop: 6, fontSize: 13, color: "#64748b" }}>{totalPct}% {syncing ? "☁️ กำลังบันทึก..." : loaded ? "✓ ซิงค์แล้ว" : "⏳ กำลังโหลด..."}</div>
+        </div>
+      </div>
+
+      {/* Content - 2 columns on desktop */}
+      <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 24px 48px" }}>
         {groups.map((group) => (
-          <div key={group.label} style={{ marginBottom: 24 }}>
-            <div style={{ fontSize: 13, fontWeight: 700, color: "#94a3b8", marginBottom: 10, paddingLeft: 4 }}>{group.label}</div>
-            {group.ids.map(id => {
-              if (id === "ctf_master") return renderCtfMaster();
-              const section = curriculum.find(s => s.id === id);
-              return section ? renderSection(section) : null;
-            })}
+          <div key={group.label} style={{ marginBottom: 36 }}>
+            <div style={{ fontSize: 12, fontWeight: 700, color: "#475569", marginBottom: 14, paddingLeft: 4, letterSpacing: 1, textTransform: "uppercase" }}>{group.label}</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 560px), 1fr))", gap: 10 }}>
+              {group.ids.map(id => {
+                if (id === "ctf_master") return <div key="ctf" style={{ gridColumn: "1 / -1" }}>{renderCtfMaster()}</div>;
+                const section = curriculum.find(s => s.id === id);
+                return section ? renderSection(section) : null;
+              })}
+            </div>
           </div>
         ))}
-
-        <div style={{ textAlign: "center", marginTop: 8, marginBottom: 32, color: "#334155", fontSize: 12 }}>กด ✓ เมื่อเรียนจบแต่ละหัวข้อ 💪</div>
+        <div style={{ textAlign: "center", marginTop: 8, marginBottom: 16, color: "#334155", fontSize: 12 }}>กด ✓ เมื่อเรียนจบแต่ละหัวข้อ 💪</div>
       </div>
     </div>
   );
