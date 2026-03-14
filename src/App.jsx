@@ -431,11 +431,11 @@ export default function App() {
         {groups.map((group) => (
           <div key={group.label} style={{ marginBottom: 36 }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: "#475569", marginBottom: 14, paddingLeft: 4, letterSpacing: 1, textTransform: "uppercase" }}>{group.label}</div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 560px), 1fr))", gap: 10 }}>
+            <div style={{ columns: "560px 2", gap: 10 }}>
               {group.ids.map(id => {
-                if (id === "ctf_master") return <div key="ctf" style={{ gridColumn: "1 / -1" }}>{renderCtfMaster()}</div>;
+                if (id === "ctf_master") return <div key="ctf" style={{ columnSpan: "all", marginBottom: 10 }}>{renderCtfMaster()}</div>;
                 const section = curriculum.find(s => s.id === id);
-                return section ? renderSection(section) : null;
+                return section ? <div key={section.id} style={{ breakInside: "avoid", marginBottom: 10 }}>{renderSection(section)}</div> : null;
               })}
             </div>
           </div>
